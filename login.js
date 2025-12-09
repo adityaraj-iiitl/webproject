@@ -1,5 +1,4 @@
 document.getElementById('applicationForm').addEventListener('submit', function(event) {
-   
     event.preventDefault();
 
     const companyName = document.getElementById('companyName').value.trim();
@@ -7,45 +6,43 @@ document.getElementById('applicationForm').addEventListener('submit', function(e
     const appDate = document.getElementById('appDate').value;
     const interviewDate = document.getElementById('interviewDate').value;
     const appStatus = document.getElementById('appStatus').value;
-    const messageElement = document.getElementById('message');
-    
-    messageElement.textContent = '';
-    messageElement.className = 'hidden';
+    const messageEl = document.getElementById('message');
 
+    messageEl.className = 'hidden';
+    messageEl.textContent = '';
+
+    // Required validations
     if (!companyName || !jobTitle || !appDate || !appStatus) {
-        showMessage('Please fill out all required fields (*).', 'error');
+        showMessage('Please fill all required fields (*)', 'error');
         return;
     }
 
-    if (interviewDate && appDate && new Date(interviewDate) < new Date(appDate)) {
-        showMessage('Interview Date cannot be before the Application Date.', 'error');
+    // Interview Date validation
+    if (interviewDate && new Date(interviewDate) < new Date(appDate)) {
+        showMessage('Interview date cannot be before the application date!', 'error');
         return;
     }
 
-    const formData = {
-        companyName: companyName,
-        jobTitle: jobTitle,
+    const data = {
+        companyName,
+        jobTitle,
         applicationDate: appDate,
-        interviewDate: interviewDate,
-        applicationStatus: appStatus,
-        source: document.getElementById('source').value.trim() || 'N/A', 
-        salaryExpectation: document.getElementById('salaryExpectation').value || 'N/A'
+        interviewDate,
+        source: document.getElementById('source').value.trim() || 'N/A',
+        salaryExpectation: document.getElementById('salaryExpectation').value || 'N/A',
+        applicationStatus: appStatus
     };
 
-   
-    console.log('Application Data Submitted:', formData);
-    
-   
-    showMessage('Application for "' + jobTitle + '" at "' + companyName + '" successfully logged!', 'success');
-    
-    
+    console.log("Saved:", data);
+
+    showMessage(`Application for "${jobTitle}" at "${companyName}" recorded!`, 'success');
+
     document.getElementById('applicationForm').reset();
 });
 
-
-
-function showMessage(text, type) {
-    const messageElement = document.getElementById('message');
-    messageElement.textContent = text;
-    messageElement.className = type; 
+function showMessage(msg, type) {
+    const messageEl = document.getElementById('message');
+    messageEl.textContent = msg;
+    messageEl.className = type;
 }
+ 
