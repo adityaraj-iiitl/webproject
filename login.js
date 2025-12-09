@@ -15,12 +15,13 @@ document.getElementById('applicationForm').addEventListener('submit', function(e
 
     // Validation
     if (!companyName || !jobTitle || !appDate || !appStatus) {
-        showMessage('Please fill out all required fields (*).', 'error');
+        showMessage('Please fill all required fields (*)', 'error');
         return;
     }
 
-    if (interviewDate && appDate && new Date(interviewDate) < new Date(appDate)) {
-        showMessage('Interview Date cannot be before the Application Date.', 'error');
+    // Interview Date validation
+    if (interviewDate && new Date(interviewDate) < new Date(appDate)) {
+        showMessage('Interview date cannot be before the application date!', 'error');
         return;
     }
 
