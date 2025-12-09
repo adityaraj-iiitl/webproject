@@ -1,6 +1,18 @@
+:root {
+    --primary: #003366; /* Deep Navy Blue */
+    --secondary: #00A388; /* Bright Teal */
+    --success: #28A745; /* Emerald Green */
+    --warning: #FFC107; /* Amber Yellow */
+    --failure: #DC3545; /* Brick Red */
+    --text-dark: #343A40; /* Charcoal Gray */
+    --white: #FFFFFF;
+    --bg-gradient-1: #003366;
+    --bg-gradient-2: #00A388;
+}
+
 body {
     font-family: 'Segoe UI', sans-serif;
-    background: linear-gradient(135deg, #4A2473, #7F3FBF);
+    background: linear-gradient(135deg, var(--bg-gradient-1), var(--bg-gradient-2));
     margin: 0;
     display: flex;
     justify-content: center;
@@ -9,11 +21,11 @@ body {
 }
 
 .container {
-    background-color: #FFDCE5;
+    background-color: var(--white);
     padding: 40px 50px;
-    width: 100%;
-    max-width: 500px; /* Max width remains 500px */
-    border-radius: 15px;
+    width: 95%;
+    max-width: 450px;
+    border-radius: 14px;
     box-shadow: 0 10px 30px rgba(0,0,0,0.15);
     animation: fadeIn 0.8s ease;
 }
@@ -27,17 +39,17 @@ body {
 }
 
 h1 {
-    color: #4A2473;
+    color: var(--primary);
     text-align: center;
     font-size: 26px;
 }
 
 .profile-icon {
     font-size: 34px;
-    color: #4A2473;
+    color: var(--secondary);
 }
 
-/* Icon Input Styling */
+/******** ICON INPUT ********/
 .icon-input {
     position: relative;
 }
@@ -47,51 +59,36 @@ h1 {
     left: 12px;
     top: 50%;
     transform: translateY(-50%);
-    color: #6A3A8A;
-    font-size: 17px;
-    z-index: 10; /* Ensure icon is above input field */
+    color: var(--primary);
+    font-size: 18px;
+    z-index: 10;
 }
 
 input, select {
-    /* --- CRITICAL FIX: box-sizing: border-box; --- */
-    box-sizing: border-box; 
     width: 100%;
-    padding: 12px 12px 12px 40px;
+    padding: 12px 12px 12px 42px;
     font-size: 15px;
     border-radius: 6px;
-    border: 1px solid #bbb;
-    background-color: white;
+    border: 1px solid #ccc;
+    background-color: var(--white);
     outline: none;
     margin-bottom: 16px;
     transition: 0.3s;
-    -webkit-appearance: none; /* For date/select consistency */
-    -moz-appearance: none;
-    appearance: none;
-}
-
-/* Specific adjustments for date input placeholder appearance */
-input[type="date"]::before {
-    content: attr(placeholder);
-    color: #888;
-    width: 100%;
     box-sizing: border-box;
 }
 
-input[type="date"]:valid::before {
-    content: "";
-}
-
 input:focus, select:focus {
-    border-color: #4A2473;
-    box-shadow: 0 0 8px rgba(74,36,115,0.3);
+    border-color: var(--secondary);
+    box-shadow: 0 0 8px rgba(0, 163, 136, 0.4);
 }
 
+/******** BUTTON ********/
 .submit-btn {
     margin-top: 12px;
     width: 100%;
     padding: 14px;
-    background-color: #4A2473;
-    color: #fff;
+    background-color: var(--primary);
+    color: var(--white);
     border: none;
     border-radius: 7px;
     font-size: 17px;
@@ -101,10 +98,11 @@ input:focus, select:focus {
 }
 
 .submit-btn:hover {
-    background-color: #7F3FBF;
+    background-color: var(--secondary);
     transform: translateY(-2px);
 }
 
+/******** MESSAGE STATUS COLORS ********/
 #message {
     margin-top: 18px;
     text-align: center;
@@ -114,22 +112,34 @@ input:focus, select:focus {
 }
 
 .success {
-    background-color: #D1F7D1;
-    color: #256B2F;
-    border: 1px solid #A7E8A7;
+    background-color: var(--success);
+    color: var(--white);
 }
 
 .error {
-    background-color: #FAD4D4;
-    color: #8A1E1E;
-    border: 1px solid #F4A4A4;
+    background-color: var(--failure);
+    color: var(--white);
 }
 
 .hidden {
     display: none;
 }
 
+/******** ANIMATION ********/
 @keyframes fadeIn {
     from { opacity: 0; transform: translateY(20px); }
     to { opacity: 1; transform: translateY(0); }
 }
+
+/******** MOBILE RESPONSIVE ********/
+@media (max-width: 480px) {
+    .container {
+        padding: 25px 20px;
+        max-width: 95%;
+    }
+
+    h1 {
+        font-size: 22px;
+    }
+}
+
