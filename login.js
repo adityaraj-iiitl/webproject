@@ -6,12 +6,14 @@ document.getElementById('applicationForm').addEventListener('submit', function(e
     const appDate = document.getElementById('appDate').value;
     const interviewDate = document.getElementById('interviewDate').value;
     const appStatus = document.getElementById('appStatus').value;
-    const messageEl = document.getElementById('message');
+    const source = document.getElementById('source').value.trim();
+    const salaryExpectation = document.getElementById('salaryExpectation').value;
+    const messageElement = document.getElementById('message');
+    
+    messageElement.textContent = '';
+    messageElement.className = 'hidden';
 
-    messageEl.className = 'hidden';
-    messageEl.textContent = '';
-
-    // Required validations
+    // Validation
     if (!companyName || !jobTitle || !appDate || !appStatus) {
         showMessage('Please fill all required fields (*)', 'error');
         return;
@@ -23,26 +25,42 @@ document.getElementById('applicationForm').addEventListener('submit', function(e
         return;
     }
 
-    const data = {
-        companyName,
-        jobTitle,
-        applicationDate: appDate,
-        interviewDate,
-        source: document.getElementById('source').value.trim() || 'N/A',
-        salaryExpectation: document.getElementById('salaryExpectation').value || 'N/A',
-        applicationStatus: appStatus
+    // Create application object
+    const newApplication = {
+        id: Date.now(),
+        title: jobTitle,
+        company: companyName,
+        role: 'Full-time',
+        industry: 'N/A',
+        location: 'Remote/Hybrid',
+        status: appStatus,
+        date: appDate,
+        link: '',
+        source: source || 'N/A',
+        salaryExpectation: salaryExpectation || 'N/A',
+        interviewDate: interviewDate || 'N/A'
     };
 
-    console.log("Saved:", data);
-
-    showMessage(`Application for "${jobTitle}" at "${companyName}" recorded!`, 'success');
-
+    // Get existing applications from localStorage
+    let applications = JSON.parse(localStorage.getItem('jobApplications')) || [];
+    
+    // Add new application
+    applications.push(newApplication);
+    
+    // Save back to localStorage
+    localStorage.setItem('jobApplications', JSON.stringify(applications));
+    
+    console.log('Application Data Saved:', newApplication);
+    console.log('Total Applications:', applications.length);
+    
+    showMessage('Application for "' + jobTitle + '" at "' + companyName + '" successfully logged and saved!', 'success');
+    
+    // Reset form
     document.getElementById('applicationForm').reset();
 });
 
-function showMessage(msg, type) {
-    const messageEl = document.getElementById('message');
-    messageEl.textContent = msg;
-    messageEl.className = type;
+function showMessage(text, type) {
+    const messageElement = document.getElementById('message');
+    messageElement.textContent = text;
+    messageElement.className = type;
 }
- 
